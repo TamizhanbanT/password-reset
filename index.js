@@ -113,6 +113,8 @@ app.post('/api/reset/:token', async (req, res) => {
   const { token } = req.params;
   const { userId, newPassword } = req.body;
 
+  const pass = await req.body.password
+
   try {
     const user = await User.findOne({
       _id: userId,
@@ -125,7 +127,7 @@ app.post('/api/reset/:token', async (req, res) => {
     }
 
     // Update user's password and clear reset token
-    user.password = newPassword;
+    user.password = pass;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
