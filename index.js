@@ -1,4 +1,3 @@
-// server.js
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -64,12 +63,9 @@ app.post('/api/reset-password', async (req, res) => {
       from: 'MS_4adyJY@trial-351ndgwyzpxlzqx8.mlsender.net',
       to: email,
       subject: 'Password Reset',
-      text: `steps to follow:\n
-      1.Go to link and copy the userId and Token. \n
-      2.change your new password 
-      You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+      text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
             Please click on the following link, or paste this into your browser to complete the process:\n\n
-            ${req.protocol}://${req.get('host')}/api/reset/${token}\n\n
+            ${req.protocol}://${req.get('host')}/reset/${token}\n\n
             If you did not request this, please ignore this email and your password will remain unchanged.\n`,
     };
 
@@ -96,13 +92,11 @@ app.get('/api/reset/:token', async (req, res) => {
       resetPasswordExpires: { $gt: Date.now() },
     });
 
-    const pass= await req.body.password
-
     if (!user) {
       return res.status(404).json({ error: 'Invalid or expired token' });
     }
-      await pass.save()
-    res.json({ message: 'Token validated', userId: user._id  });
+
+    res.json({ message: 'Token validated', userId: user._id });
   } catch (error) {
     console.error('Error validating token:', error);
     res.status(500).json({ error: 'Failed to validate token' });
@@ -192,6 +186,3 @@ app.post("/register", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-
-
