@@ -60,12 +60,15 @@ app.post('/api/reset-password', async (req, res) => {
   });
     
     const mailOptions = {
-      from: 'MS_4adyJY@trial-351ndgwyzpxlzqx8.mlsender.net',
+       from: 'MS_4adyJY@trial-351ndgwyzpxlzqx8.mlsender.net',
       to: email,
       subject: 'Password Reset',
-      text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+      text: `steps to follow:\n
+      1.Go to link and copy the userId and Token. \n
+      2.change your new password 
+      You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
             Please click on the following link, or paste this into your browser to complete the process:\n\n
-            ${req.protocol}://${req.get('host')}/reset/${token}\n\n
+            ${req.protocol}://${req.get('host')}/api/reset/${token}\n\n
             If you did not request this, please ignore this email and your password will remain unchanged.\n`,
     };
 
